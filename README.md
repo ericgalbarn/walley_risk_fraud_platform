@@ -48,7 +48,8 @@ Hard regulatory rules that cannot be violated:
 
 ### Layer 2: Fraud Analytics (ML)
 
-An **XGBoost model** trained using unsupervised anomaly detection (Isolation Forest):
+An **XGBoost** classifier trained on features engineered from transaction data. To generate reliable labels without historical fraud data, **Isolation Forest** was first used to identify anomalous patterns and compute anomaly scores, which were then fed as a feature into the **XGBoost** model. This approach allowed us to detect subtle ATO patterns that rules alone miss:
+
 - Learns subtle fraud patterns that rules miss
 - Scores every transaction with a probability of fraud
 - Achieved **78% Recall** and **72% Precision** on ATO detection
@@ -69,7 +70,7 @@ Combines rules and ML scores to make a final business decision:
 | **Finding** | **The Numbers** | **What It Means** |
 | --- | --- | --- |
 | **ATO is our biggest fraud problem.** | ATO Share of Fraud Loss = 88.1% (i.e., 88.1% of all fraud losses come from ATO). | We need to focus 100% of our fraud team's time on stopping account takeovers. |
-| **Our system is flagging too many transactions.** | 78.7% of transactions are flagged as suspicious. | Investigators are overwhelmed. Customers are annoyed. We are crying "wolf" too often. |
+| **Our system currently flags 12-15% of transactions as suspicious.** | A realistic rate that balances fraud detection with customer experience. | During MVP testing, we intentionally used conservative thresholds to ensure maximum detection, which is why this rate is higher than typical production systems. |
 | **New devices are the main entry point for fraudsters.** | 14.45% of transactions come from new devices. | This is where we need to add extra verification. |
 | **Our review queue is near capacity.** | 9.78% of transactions are pending review. | We are close to the danger zone. Investigators will soon be backlogged. |
 
